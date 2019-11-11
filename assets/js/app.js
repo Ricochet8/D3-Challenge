@@ -1,4 +1,3 @@
-// @TODO: YOUR CODE HERE!
 var svgWidth = 960;
 var svgHeight = 700;
 
@@ -28,6 +27,7 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
   stateData.forEach(function (data) {
         data.poverty = +data.poverty;
         data.healthcare = +data.healthcare;
+  //      data.abbr = +data.abbr;
     });
 
   // Step 2: Create scale functions
@@ -52,34 +52,54 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
     .call(bottomAxis);
 
   chartGroup.append("g")
-    .call(leftAxis);
+    .call(leftAxis)
+    .append("text");
 
   // Step 5: Create Circles
   // var myColor = d3.scaleSequential().domain([1,10])
   //   .interpolator(d3.interpolateViridis);
   //   svg.selectAll("#scatter").data(stateData).enter().append("circle").attr("cx", function(d,i){return 30 + i*60}).attr("cy", 150).attr("r", 19).attr("fill", function(d){return myColor(d) })
   // // ==============================
-  var circlesGroup = chartGroup.selectAll("circle")
+
+
+
+  var nodes = chartGroup.selectAll("g")
     .data(stateData)
     .enter()
-    .append("circle")
+    .append("g");
+
+  nodes.append("circle")
+    .attr("r", "15")
+    .attr("fill", "green")
+    .attr("opacity", ".5")
+    .attr("cx", d => xLinearScale(d.poverty))
+    .attr("cy", d => yLinearScale(d.healthcare));
+
+  nodes.append("text")
     .attr("cx", d => xLinearScale(d.poverty))
     .attr("cy", d => yLinearScale(d.healthcare))
+    .text(d => d.abbr);
 
-    .attr("r", "15")
-    // .append("text").text(function (d) {
-    //   return d.abbr;
-    // })
-    // .attr("cx", function (d) {
-    //   return xLinearScale(d.poverty);
-    // })
-    // .attr("cy", function (d) {
-    //   return yLinearScale(d.healthcare)
-    .attr("fill", "green")
 
-    .attr("opacity", ".5");
 
-    //});
+
+  // var circlesGroup = chartGroup.selectAll("circle")
+  //   .data(stateData)
+  //   .enter().append("g")
+  //   .append("circle")
+  //   .attr("class", "dot")
+  //   .attr("cx", d => xLinearScale(d.poverty))
+  //   .attr("cy", d => yLinearScale(d.healthcare))
+
+  //   .attr("r", "15")
+  //   .attr("fill", "green")
+  //   .attr("opacity", ".5");
+
+  //   //});
+  // circlesGroup.append("text")
+  //   .text(d => d.abbr)
+  //   .attr("cx", d => xLinearScale(d.poverty))
+  //   .attr("cy", d => yLinearScale(d.healthcare));
 
   
 
