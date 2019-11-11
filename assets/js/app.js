@@ -25,10 +25,10 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
   // Step 1: Parse Data/Cast as numbers
   // ==============================
   stateData.forEach(function (data) {
-        data.poverty = +data.poverty;
-        data.healthcare = +data.healthcare;
-  //      data.abbr = +data.abbr;
-    });
+    data.poverty = +data.poverty;
+    data.healthcare = +data.healthcare;
+    //      data.abbr = +data.abbr;
+  });
 
   // Step 2: Create scale functions
   // ==============================
@@ -63,45 +63,47 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
 
 
 
-  var nodes = chartGroup.selectAll("g")
-    .data(stateData)
-    .enter()
-    .append("g");
-
-  nodes.append("circle")
-    .attr("r", "15")
-    .attr("fill", "green")
-    .attr("opacity", ".5")
-    .attr("cx", d => xLinearScale(d.poverty))
-    .attr("cy", d => yLinearScale(d.healthcare));
-
-  nodes.append("text")
-    .attr("cx", d => xLinearScale(d.poverty))
-    .attr("cy", d => yLinearScale(d.healthcare))
-    .text(d => d.abbr);
-
-
-
-
-  // var circlesGroup = chartGroup.selectAll("circle")
+  // var nodes = chartGroup.selectAll("g")
   //   .data(stateData)
-  //   .enter().append("g")
-  //   .append("circle")
-  //   .attr("class", "dot")
-  //   .attr("cx", d => xLinearScale(d.poverty))
-  //   .attr("cy", d => yLinearScale(d.healthcare))
+  //   .enter()
+  //   .append("g");
 
+  // nodes.append("circle")
   //   .attr("r", "15")
   //   .attr("fill", "green")
-  //   .attr("opacity", ".5");
-
-  //   //});
-  // circlesGroup.append("text")
-  //   .text(d => d.abbr)
+  //   .attr("opacity", ".5")
   //   .attr("cx", d => xLinearScale(d.poverty))
   //   .attr("cy", d => yLinearScale(d.healthcare));
 
-  
+  // nodes.append("text")
+  //   .attr("cx", d => xLinearScale(d.poverty))
+  //   .attr("cy", d => yLinearScale(d.healthcare))
+  //   .text(d => d.abbr);
+
+
+
+
+   var circlesGroup = chartGroup.selectAll("circle")
+     .data(stateData)
+     .enter().append("g")
+     .append("circle")
+     .attr("class", "dot")
+     .attr("cx", d => xLinearScale(d.poverty))
+     .attr("cy", d => yLinearScale(d.healthcare))
+
+     .attr("r", "15")
+     .attr("fill", "green")
+     .attr("opacity", ".5");
+
+   
+
+  //  chartGroup.selectAll("g")
+  //    .append("text")
+  //    .attr("cx", d => xLinearScale(d.poverty))
+  //    .attr("cy", d => yLinearScale(d.healthcare))
+  //    .text(d => d.abbr);
+
+
 
   // Step 6: Initialize tool tip
   // ==============================
@@ -140,6 +142,6 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
     .attr("class", "axisText")
     .text("Poverty (%)");
 
-  }).catch(function (error) {
+}).catch(function (error) {
   console.log(error);
 });
