@@ -20,6 +20,33 @@ var svg = d3.select("#scatter")
 var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+// function updateToolTip(circlesGroup) {
+
+
+
+//   var toolTip = d3.tip()
+//     .attr("class", "tooltip")
+//     .offset([80, -60])
+//     .html(function (d) {
+//       return (`${d.state}<br>Poverty: ${d.poverty}<br>Healthcare: ${d.healthcare}`);
+//     });
+
+//   circlesGroup.call(toolTip);
+
+//   circlesGroup.on("mouseover", function (data) {
+//     toolTip.show(data);
+//   })
+//     // onmouseout event
+//     .on("mouseout", function (data, index) {
+//       toolTip.hide(data);
+//     });
+
+//   return circlesGroup;
+// }
+
+
+
+
 d3.csv("assets/data/data.csv").then(function (stateData) {
   console.log(stateData);
   // Step 1: Parse Data/Cast as numbers
@@ -55,54 +82,29 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
     .call(leftAxis)
     .append("text");
 
-  // Step 5: Create Circles
-  // var myColor = d3.scaleSequential().domain([1,10])
-  //   .interpolator(d3.interpolateViridis);
-  //   svg.selectAll("#scatter").data(stateData).enter().append("circle").attr("cx", function(d,i){return 30 + i*60}).attr("cy", 150).attr("r", 19).attr("fill", function(d){return myColor(d) })
-  // // ==============================
+
+
+  var circlesGroup = chartGroup.selectAll("circle")
+    .data(stateData)
+    .enter()
+
+  circlesGroup
+    .append("circle")
+    .attr("class", "dot")
+    .attr("cx", d => xLinearScale(d.poverty))
+    .attr("cy", d => yLinearScale(d.healthcare))
+
+    .attr("r", "15")
+    .attr("fill", "green")
+    .attr("opacity", ".5");
 
 
 
-  // var nodes = chartGroup.selectAll("g")
-  //   .data(stateData)
-  //   .enter()
-  //   .append("g");
-
-  // nodes.append("circle")
-  //   .attr("r", "15")
-  //   .attr("fill", "green")
-  //   .attr("opacity", ".5")
-  //   .attr("cx", d => xLinearScale(d.poverty))
-  //   .attr("cy", d => yLinearScale(d.healthcare));
-
-  // nodes.append("text")
-  //   .attr("cx", d => xLinearScale(d.poverty))
-  //   .attr("cy", d => yLinearScale(d.healthcare))
+  // circlesGroup
+  //   .append("text")
+  //   .attr("x", d => xLinearScale(d.poverty))
+  //   .attr("y", d => yLinearScale(d.healthcare))
   //   .text(d => d.abbr);
-
-
-
-
-   var circlesGroup = chartGroup.selectAll("circle")
-     .data(stateData)
-     .enter().append("g")
-     .append("circle")
-     .attr("class", "dot")
-     .attr("cx", d => xLinearScale(d.poverty))
-     .attr("cy", d => yLinearScale(d.healthcare))
-
-     .attr("r", "15")
-     .attr("fill", "green")
-     .attr("opacity", ".5");
-
-   
-
-  //  chartGroup.selectAll("g")
-  //    .append("text")
-  //    .attr("cx", d => xLinearScale(d.poverty))
-  //    .attr("cy", d => yLinearScale(d.healthcare))
-  //    .text(d => d.abbr);
-
 
 
   // Step 6: Initialize tool tip
@@ -118,6 +120,8 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
   // ==============================
   chartGroup.call(toolTip);
 
+
+
   // Step 8: Create event listeners to display and hide the tooltip
   // ==============================
   circlesGroup.on("click", function (data) {
@@ -127,6 +131,8 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
     .on("mouseout", function (data, index) {
       toolTip.hide(data);
     });
+
+
 
   // Create axes labels
   chartGroup.append("text")

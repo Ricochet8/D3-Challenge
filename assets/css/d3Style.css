@@ -27,11 +27,13 @@
 .stateText {
   font-family: sans-serif;
   fill: #fff;
-  text-anchor: middle;
+  text-anchor: start;
+  vertical-align: text-bottom;
 }
 
 .stateCircle {
   fill: #89bdd3;
+  border: 1px solid Maroon;
   stroke: #e3e3e3;
 }
 
