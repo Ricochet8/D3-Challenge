@@ -100,11 +100,11 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
 
 
 
-  // circlesGroup
-  //   .append("text")
-  //   .attr("x", d => xLinearScale(d.poverty))
-  //   .attr("y", d => yLinearScale(d.healthcare))
-  //   .text(d => d.abbr);
+  circlesGroup
+    .append("text")
+    .attr("x", d => xLinearScale(d.poverty))
+    .attr("y", d => yLinearScale(d.healthcare))
+    .text(d => d.abbr);
 
 
   // Step 6: Initialize tool tip

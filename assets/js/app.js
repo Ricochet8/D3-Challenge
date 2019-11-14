@@ -83,25 +83,27 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
 
 
 
-   var circlesGroup = chartGroup.selectAll("circle")
-     .data(stateData)
-     .enter().append("g")
-     .append("circle")
-     .attr("class", "dot")
-     .attr("cx", d => xLinearScale(d.poverty))
-     .attr("cy", d => yLinearScale(d.healthcare))
+  var circlesGroup = chartGroup.selectAll("circle")
+    .data(stateData)
+    .enter()
 
-     .attr("r", "15")
-     .attr("fill", "green")
-     .attr("opacity", ".5");
+  // circlesGroup
+    .append("circle")
+    .attr("class", "dot")
+    .attr("cx", d => xLinearScale(d.poverty))
+    .attr("cy", d => yLinearScale(d.healthcare))
 
-   
+    .attr("r", "15")
+    .attr("fill", "green")
+    .attr("opacity", ".5");
 
-  //  chartGroup.selectAll("g")
-  //    .append("text")
-  //    .attr("cx", d => xLinearScale(d.poverty))
-  //    .attr("cy", d => yLinearScale(d.healthcare))
-  //    .text(d => d.abbr);
+
+
+  circlesGroup
+    .append("text")
+    .attr("x", d => xLinearScale(d.poverty))
+    .attr("y", d => yLinearScale(d.healthcare))
+    .text(d => d.abbr);
 
 
 
