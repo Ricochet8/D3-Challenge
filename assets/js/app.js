@@ -33,7 +33,7 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
   // Step 2: Create scale functions
   // ==============================
   var xLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(stateData, d => d.poverty)])
+    .domain([8, d3.max(stateData, d => d.poverty)])
     .range([0, width]);
 
   var yLinearScale = d3.scaleLinear()
@@ -87,7 +87,7 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
     .data(stateData)
     .enter()
 
-  // circlesGroup
+  circlesGroup
     .append("circle")
     .attr("class", "dot")
     .attr("cx", d => xLinearScale(d.poverty))
@@ -122,7 +122,7 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
 
   // Step 8: Create event listeners to display and hide the tooltip
   // ==============================
-  circlesGroup.on("click", function (data) {
+  circlesGroup.selectAll("text").on("click", function (data) {
     toolTip.show(data, this);
   })
     // onmouseout event
